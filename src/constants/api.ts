@@ -1,4 +1,4 @@
-export const BASE_API_URL = import.meta.env.VITE_MKM_DOMAIN ?? '';
+export const BASE_API_URL = import.meta.env.VITE_APP_API_URL ?? '';
 
 export const HTTP_METHOD = {
   GET: 'GET',

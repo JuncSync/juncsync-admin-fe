@@ -5,11 +5,16 @@ import {
 } from 'react-router-dom';
 
 import HomePage from './pages';
+import LoginPage from './pages/login';
 
 const routerArray = [
   {
     path: '/',
     element: <HomePage />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
   },
 ];
 
