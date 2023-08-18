@@ -27,11 +27,7 @@ const LoginPageMain = () => {
         className="w-[330px] h-[380px] bg-white drop-shadow-container rounded-xl px-[30px] py-[40px] flex flex-col justify-center items-center"
         onSubmit={onSubmit}
       >
-        <img
-          className="w-[212px] h-[84px]"
-          src="/src/assets/logo.svg"
-          alt="로고"
-        />
+        <img className="w-[212px] h-[84px]" src="/logo.svg" alt="로고" />
         <div className="w-full flex flex-col gap-[15.47px] mt-[36.49px]">
           <Input
             type="text"

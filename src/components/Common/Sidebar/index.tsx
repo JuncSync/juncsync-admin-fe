@@ -8,7 +8,7 @@ const Sidebar = ({ children }: ILayoutProps) => {
       <div className="w-full border-b-[1px] border-solid border-gray border-opacity-[0.2] pl-[40px] py-[23px]">
         <img
           className="w-[186px] h-[51px]"
-          src="/src/assets/service-letter.svg"
+          src="/service-letter.svg"
           alt="서비스 글자"
         />
       </div>
