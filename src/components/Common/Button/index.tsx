@@ -16,6 +16,7 @@ const Button = ({
   disabled = false,
   customClassName,
   onClick,
+  onMouseOver,
 }: Props): ReactElement => {
   const buttonStyles = {
     backgroundColor: buttonType === 'Primary' ? 'bg-orange' : 'bg-white',
@@ -32,6 +33,7 @@ const Button = ({
       ).join(' ')} ${customClassName ?? ''}`}
       onClick={onClick}
       disabled={disabled}
+      onMouseOver={onMouseOver}
     >
       {text}
     </button>

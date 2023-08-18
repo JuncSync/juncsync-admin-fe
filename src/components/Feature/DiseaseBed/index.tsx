@@ -3,10 +3,13 @@ import React from 'react';
 
 import Button from '@/components/Common/Button';
 
-interface Props {
+export interface DiseaseBedType {
+  id: string;
   bedCode: string;
-  patientName?: string;
+  patientCode?: string;
   patientAge?: number;
+  patientName?: string;
+  patientSex?: string;
   diseaseName?: string;
   diseaseCode?: string;
   isEmpty: boolean;
@@ -15,15 +18,31 @@ interface Props {
 }
 
 const DiseaseBed = ({
-  bedCode,
-  patientName,
-  patientAge,
-  diseaseName,
-  diseaseCode,
-  isEmpty,
-  isWaiting,
-  createdAt,
-}: Props) => {
+  bed,
+  handleAddBed,
+  handleModifyBed,
+  handleDeleteBed,
+  setForm,
+}: {
+  bed: DiseaseBedType;
+  handleAddBed: () => void;
+  handleModifyBed: (bed: DiseaseBedType) => void;
+  handleDeleteBed: (bed: DiseaseBedType) => void;
+  setForm?: any;
+}) => {
+  const { id, bedCode, isEmpty, isWaiting, createdAt } = bed;
+
+  const onSetFormHoverOrModify = () => {
+    setForm({
+      bedCode: bed.bedCode,
+      patientCode: bed.patientCode ?? '',
+      patientAge: bed.patientAge ?? '',
+      patientName: bed.patientName ?? '',
+      patientSex: bed.patientSex ?? '',
+      diseaseName: bed.diseaseName ?? '',
+    });
+  };
+
   return (
     <section className="w-[338px] h-[200px] bg-white border border-solid border-[#ACACAC] rounded-lg px-[28px] pt-[28px] pb-[19px]">
       <h2 className="text-black text-[20px] font-bold text-opacity-[0.9] mb-[16px]">
@@ -35,14 +54,14 @@ const DiseaseBed = ({
             ? '빈병상'
             : isWaiting
             ? 'Waiting'
-            : `${patientName}(${patientAge}세)`}
+            : `${bed?.patientName}(${bed?.patientAge}세)`}
         </h1>
         <h4 className="text-black text-[12px] font-bold text-opacity-[0.4]">
           {isEmpty
             ? '-'
             : isWaiting
             ? '정보 입력이 필요합니다.'
-            : `병명(코드): ${diseaseName}(${diseaseCode})`}
+            : `병명(코드): ${bed?.diseaseName}(${bed?.diseaseCode})`}
         </h4>
       </div>
       <div className="w-full h-[1px] bg-black opacity-[0.1] mt-[12px] mb-[9px]" />
@@ -57,6 +76,7 @@ const DiseaseBed = ({
             text="입원"
             size="sm"
             customClassName="w-[58px] h-[25px]"
+            onClick={handleAddBed}
           />
         ) : (
           <div className="flex items-center gap-[8px]">
@@ -65,12 +85,16 @@ const DiseaseBed = ({
               text="퇴원"
               size="sm"
               customClassName="w-[58px] h-[25px]"
+              onClick={() => handleDeleteBed(bed)}
+              onMouseOver={onSetFormHoverOrModify}
             />
             <Button
               buttonType="Primary"
               text="수정"
               size="sm"
               customClassName="w-[58px] h-[25px]"
+              onClick={() => handleModifyBed(bed)}
+              onMouseOver={onSetFormHoverOrModify}
             />
           </div>
         )}
