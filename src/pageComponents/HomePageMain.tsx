@@ -1,10 +1,41 @@
+import { useState } from 'react';
+
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
 import { useModal } from '@/components/Common/Modal/Modal.hooks';
 import Sidebar from '@/components/Common/Sidebar';
+import DiseaseBed from '@/components/Feature/DiseaseBed';
 
 const HomePageMain = () => {
   const { isOpen, open, close, setData, render } = useModal();
+
+  const [beds, setBeds] = useState([
+    {
+      id: 1,
+      bedCode: 'A-01',
+      patientName: '김진호',
+      patientAge: 24,
+      diseaseName: '골절',
+      diseaseCode: '82-DA',
+      isEmpty: false,
+      isWaiting: false,
+      createdAt: Date.now(),
+    },
+    {
+      id: 2,
+      bedCode: 'A-02',
+      isEmpty: true,
+      isWaiting: false,
+      createdAt: Date.now(),
+    },
+    {
+      id: 3,
+      bedCode: 'A-02',
+      isEmpty: false,
+      isWaiting: true,
+      createdAt: Date.now(),
+    },
+  ]);
 
   const handleAddBed = () => {
     setData({
@@ -136,7 +167,13 @@ const HomePageMain = () => {
             onClick={handleAddBed}
           />
         </nav>
-        <main className="w-full flex-1 bg-[#F9F7F7]"></main>
+        <main className="w-full flex-1 bg-[#F9F7F7] py-[28px] px-[32px]">
+          <div className="flex flex-wrap gap-[31px]">
+            {beds.map((bed) => (
+              <DiseaseBed key={bed.id} {...bed} />
+            ))}
+          </div>
+        </main>
       </div>
       {isOpen && render()}
     </div>
