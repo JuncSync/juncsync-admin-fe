@@ -19,8 +19,6 @@ const LoginPageMain = () => {
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-
-    console.log(form);
   };
 
   return (
@@ -36,6 +34,7 @@ const LoginPageMain = () => {
         />
         <div className="w-full flex flex-col gap-[15.47px] mt-[36.49px]">
           <Input
+            type="text"
             placeholder="ID"
             inputClassName="w-full py-[13px] px-[17px]"
             autoFocus
@@ -44,6 +43,7 @@ const LoginPageMain = () => {
             name="id"
           />
           <Input
+            type="password"
             placeholder="PW"
             inputClassName="w-full py-[13px] px-[17px]"
             value={form.pw}
