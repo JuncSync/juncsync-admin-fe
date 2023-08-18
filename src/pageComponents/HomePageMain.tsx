@@ -137,7 +137,7 @@ const HomePageMain = () => {
                 className="w-fit text-black font-semibold text-xl"
                 htmlFor="patient-age"
               >
-                연령 (생년월일)
+                연령
               </label>
               <Input
                 id="patient-age"
