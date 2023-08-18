@@ -22,6 +22,7 @@ const Button = ({
     fontColor: buttonType === 'Primary' ? 'text-white' : 'text-orange',
     borderRadius: size === 'lg' ? 'rounded-[8px]' : 'rounded-[6px]',
     padding: buttonType === 'Primary' ? 'py-[13px]' : 'py-[5.76px]',
+    border: buttonType === 'Secondary' && 'border border-solid border-orange',
   } as const;
   return (
     <button

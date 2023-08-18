@@ -37,7 +37,7 @@ const LoginPageMain = () => {
         <div className="w-full flex flex-col gap-[15.47px] mt-[36.49px]">
           <Input
             placeholder="ID"
-            inputClassName="w-full"
+            inputClassName="w-full py-[13px] px-[17px]"
             autoFocus
             value={form.id}
             onChange={onChange}
@@ -45,7 +45,7 @@ const LoginPageMain = () => {
           />
           <Input
             placeholder="PW"
-            inputClassName="w-full"
+            inputClassName="w-full py-[13px] px-[17px]"
             value={form.pw}
             onChange={onChange}
             name="pw"
