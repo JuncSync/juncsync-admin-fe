@@ -1,8 +1,110 @@
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
+import { useModal } from '@/components/Common/Modal/Modal.hooks';
 import Sidebar from '@/components/Common/Sidebar';
 
 const HomePageMain = () => {
+  const { isOpen, open, close, setData, render } = useModal();
+
+  const handleAddBed = () => {
+    setData({
+      modalChildren: (
+        <form className="flex flex-col">
+          <h1 className="w-full flex justify-start mb-[32px] text-xl">입원</h1>
+          <div className="grid grid-cols-2 gap-x-[55px] gap-y-[16px]">
+            <div className="flex items-center justify-between gap-[30px]">
+              <label
+                className="w-fit text-black font-semibold text-xl"
+                htmlFor="bed-id"
+              >
+                병상번호
+              </label>
+              <Input
+                id="bed-id"
+                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+                autoFocus
+              />
+            </div>
+            <div className="flex items-center justify-between gap-[30px]">
+              <label
+                className="w-fit text-black font-semibold text-xl"
+                htmlFor="disease-name"
+              >
+                병명
+              </label>
+              <Input
+                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+                id="disease-name"
+              />
+            </div>
+            <div className="flex items-center justify-between gap-[30px]">
+              <label
+                className="w-fit text-black font-semibold text-xl"
+                htmlFor="patient-no"
+              >
+                환자 번호
+              </label>
+              <Input
+                id="patient-no"
+                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+              />
+            </div>
+            <div className="flex items-center justify-between gap-[30px]">
+              <label
+                className="w-fit text-black font-semibold text-xl"
+                htmlFor="patient-age"
+              >
+                연령 (생년월일)
+              </label>
+              <Input
+                id="patient-age"
+                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+              />
+            </div>
+            <div className="flex items-center justify-between gap-[30px]">
+              <label
+                className="w-fit text-black font-semibold text-xl"
+                htmlFor="patient-name"
+              >
+                환자 성명
+              </label>
+              <Input
+                id="patient-name"
+                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+              />
+            </div>
+            <div className="flex items-center justify-between gap-[30px]">
+              <label
+                className="w-fit text-black font-semibold text-xl"
+                htmlFor="patient-sex"
+              >
+                성별
+              </label>
+              <Input
+                id="patient-sex"
+                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+              />
+            </div>
+          </div>
+        </form>
+      ),
+      buttons: [
+        {
+          type: 'Secondary',
+          text: 'Cancel',
+          action: () => close(),
+        },
+        {
+          type: 'Primary',
+          text: 'Save',
+          action: () => close(),
+        },
+      ],
+    });
+
+    open();
+  };
+
   return (
     <div className="flex">
       <Sidebar>
@@ -26,14 +128,17 @@ const HomePageMain = () => {
             inputClassName="w-[337px] py-[8px] px-[18px]"
           />
           <Button
+            type="button"
             text="병상 추가"
             buttonType="Secondary"
             size="lg"
             customClassName="w-[204px] h-[50px]"
+            onClick={handleAddBed}
           />
         </nav>
         <main className="w-full flex-1 bg-[#F9F7F7]"></main>
       </div>
+      {isOpen && render()}
     </div>
   );
 };
