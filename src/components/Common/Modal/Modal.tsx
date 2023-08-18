@@ -35,7 +35,7 @@ const Modal = ({
 
   return (
     <div
-      className="z-50 fixed top-0 left-0 w-screen h-screen bg-[#ACACAC]"
+      className="z-50 fixed top-0 left-0 w-screen h-screen bg-[#ACACAC] bg-opacity-60"
       onClick={onClickOutside}
     >
       <div className="min-w-[936px] min-h-[410px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 bg-white px-[58px] pt-[36px] pb-[53px] rounded-xl flex flex-col">
