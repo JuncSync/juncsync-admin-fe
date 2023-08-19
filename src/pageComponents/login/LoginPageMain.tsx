@@ -1,4 +1,9 @@
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  useEffect,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/Common/Button';
@@ -9,7 +14,7 @@ import { INFINITE_EXPIRE_TIME } from '@/constants/time';
 
 import { usePostLoginMutation } from '@/hooks/query/auth/useAuthMutation';
 
-import { setCookie } from '@/utils/cookies.util';
+import { getCookie, setCookie } from '@/utils/cookies.util';
 
 const LoginPageMain = () => {
   const navigate = useNavigate();
@@ -46,6 +51,14 @@ const LoginPageMain = () => {
       },
     );
   };
+
+  useEffect(() => {
+    // TEMP: 임시 처리 (사용자 엑세스 토큰으로 유저 인증 처리)
+    const accessToken = getCookie(COOKIE_ACCESS_TOKEN_KEY);
+    if (accessToken) {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <div className="flex justify-center items-center bg-orange w-full min-h-screen">
