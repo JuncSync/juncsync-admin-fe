@@ -1,8 +1,6 @@
 import { queryClient } from '@/react-query/queryClient';
 import { queryKeys } from '@/react-query/queryKeys';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { useDebounce } from 'usehooks-ts';
 
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
@@ -11,10 +9,9 @@ import Radio from '@/components/Common/Radio';
 import BedCard from '@/components/Feature/BedCard';
 import HomeLayout from '@/components/Feature/Layout/HomeLayout';
 
-import { SEARCH_DEBOUNCE_TIME } from '@/constants/time';
-
 import { Bed } from '@/api/models/bed/bed.type';
 
+import useSearchKeyword from '@/hooks/HomePage/useSearchKeyword';
 import { usePostBedOutMutation } from '@/hooks/query/bed/useBedMutation';
 import { useGetBedsQuery } from '@/hooks/query/bed/useBedQuery';
 import {
@@ -44,18 +41,8 @@ const HomePageMain = () => {
 
   const [form, setForm] = useState(INITIAL_FORM);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchValue, setSearchValue] = useState<string>(
-    searchParams.get('keyword') ?? '',
-  );
-
-  const onSearchKeyword: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { value } = event.target;
-
-    setSearchValue(value);
-  };
-
-  const searchKeyword = useDebounce(searchValue, SEARCH_DEBOUNCE_TIME);
+  const { searchValue, searchKeyword, handleSearchKeyword } =
+    useSearchKeyword();
 
   const { data, isLoading } = useGetBedsQuery({
     s: searchKeyword,
@@ -234,65 +221,67 @@ const HomePageMain = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <label className="w-fit text-gray_700 font-medium text-sm">
-                ETA (Optional)
-              </label>
-              <div className="flex items-center gap-2">
-                <Input
-                  inputClassName="w-[150px] h-[56px] py-4 px-5"
-                  value={form?.etaHour ?? ''}
-                  name="etaHour"
-                  onChange={onChangeForm}
-                  placeholder="00"
-                  disabled={type === 'delete'}
-                  type="number"
-                  max="2"
-                />
-                <span className="text-gray_400 text-lg font-normal">:</span>
-                <Input
-                  inputClassName="w-[150px] h-[56px] py-4 px-5"
-                  value={form?.etaMin ?? ''}
-                  name="etaMin"
-                  onChange={onChangeForm}
-                  placeholder="00"
-                  disabled={type === 'delete'}
-                  type="number"
-                  max="2"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="w-fit text-gray_700 font-medium text-sm">
-                Severity Levels
-              </label>
-              <div className="flex items-center gap-4 flex-wrap">
-                <Radio
-                  title="None"
-                  value="None"
-                  checked={form.severity === 'None'}
-                  handleChange={onChangeSeverity}
-                />
-                <Radio
-                  title="Critical"
-                  value="Critical"
-                  checked={form.severity === 'Critical'}
-                  handleChange={onChangeSeverity}
-                />
-                <Radio
-                  title="Severe"
-                  value="Severe"
-                  checked={form.severity === 'Severe'}
-                  handleChange={onChangeSeverity}
-                />
-                <Radio
-                  title="Moderate"
-                  value="Moderate"
-                  checked={form.severity === 'Moderate'}
-                  handleChange={onChangeSeverity}
-                />
-              </div>
-            </div>
+            {type === 'add' && (
+              <>
+                <div className="flex flex-col gap-2">
+                  <label className="w-fit text-gray_700 font-medium text-sm">
+                    ETA (Optional)
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      inputClassName="w-[150px] h-[56px] py-4 px-5"
+                      value={form?.etaHour ?? ''}
+                      name="etaHour"
+                      onChange={onChangeForm}
+                      placeholder="00"
+                      type="number"
+                      max="2"
+                    />
+                    <span className="text-gray_400 text-lg font-normal">:</span>
+                    <Input
+                      inputClassName="w-[150px] h-[56px] py-4 px-5"
+                      value={form?.etaMin ?? ''}
+                      name="etaMin"
+                      onChange={onChangeForm}
+                      placeholder="00"
+                      type="number"
+                      max="2"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="w-fit text-gray_700 font-medium text-sm">
+                    Severity Levels
+                  </label>
+                  <div className="flex items-center gap-4 flex-wrap">
+                    <Radio
+                      title="None"
+                      value="None"
+                      checked={form.severity === 'None'}
+                      handleChange={onChangeSeverity}
+                    />
+                    <Radio
+                      title="Critical"
+                      value="Critical"
+                      checked={form.severity === 'Critical'}
+                      handleChange={onChangeSeverity}
+                    />
+                    <Radio
+                      title="Severe"
+                      value="Severe"
+                      checked={form.severity === 'Severe'}
+                      handleChange={onChangeSeverity}
+                    />
+                    <Radio
+                      title="Moderate"
+                      value="Moderate"
+                      checked={form.severity === 'Moderate'}
+                      handleChange={onChangeSeverity}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </form>
       );
@@ -495,10 +484,6 @@ const HomePageMain = () => {
     setBeds(preprocessedData);
   }, [data, isLoading]);
 
-  useEffect(() => {
-    setSearchParams({ keyword: searchKeyword });
-  }, [searchKeyword]);
-
   return (
     <HomeLayout>
       <div className="w-full flex flex-col">
@@ -508,7 +493,7 @@ const HomePageMain = () => {
             placeholder="Search by patient name"
             inputClassName="min-w-[320px] h-10 py-2 px-5"
             value={searchValue}
-            onChange={onSearchKeyword}
+            onChange={handleSearchKeyword}
           />
           <Button
             type="button"
