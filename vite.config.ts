@@ -8,7 +8,5 @@ export default defineConfig({
   server: {
     open: true,
   },
-  define: {
-    global: {},
-  },
+  define: { global: 'window' },
 });
