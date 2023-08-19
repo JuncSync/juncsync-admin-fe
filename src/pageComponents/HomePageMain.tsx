@@ -7,6 +7,8 @@ import Radio from '@/components/Common/Radio';
 import DiseaseBed, { DiseaseBedType } from '@/components/Feature/DiseaseBed';
 import HomeLayout from '@/components/Feature/Layout/HomeLayout';
 
+import { useGetBedsQuery } from '@/hooks/query/bed/useBedQuery';
+
 export const INITIAL_FORM = {
   bedCode: '',
   patientCode: '',
@@ -51,6 +53,8 @@ const HomePageMain = () => {
   const [selectedBed, setSelectedBed] = useState<DiseaseBedType | null>(null);
 
   const [form, setForm] = useState(INITIAL_FORM);
+
+  const { data, isLoading } = useGetBedsQuery();
 
   const reset = () => {
     setType('');
@@ -342,6 +346,15 @@ const HomePageMain = () => {
     handleDischargeBed,
     selectedBed,
   ]);
+
+  useEffect(() => {
+    if (!data || isLoading) {
+      return;
+    }
+
+    // TODO: setBeds
+    console.log(data);
+  }, [data, isLoading]);
 
   return (
     <HomeLayout>
