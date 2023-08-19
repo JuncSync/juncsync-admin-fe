@@ -6,7 +6,7 @@ import { PageQueryStrings } from '@/api/models/common/common.type';
 
 export const useGetBedsQuery = (pageQueryStrings: PageQueryStrings) => {
   const { data, isLoading, isSuccess, isError, isFetching, isFetched } =
-    useQuery([queryKeys.GetBeds, pageQueryStrings.s], () =>
+    useQuery([queryKeys.GetBeds, pageQueryStrings.keyword], () =>
       getBeds(pageQueryStrings),
     );
 

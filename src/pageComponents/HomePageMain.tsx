@@ -27,7 +27,7 @@ const HomePageMain = () => {
   } = useBedModalActions();
 
   const { data, isLoading } = useGetBedsQuery({
-    s: searchKeyword,
+    keyword: searchKeyword,
   });
 
   useEffect(() => {

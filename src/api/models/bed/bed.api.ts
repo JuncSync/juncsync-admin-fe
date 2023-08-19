@@ -13,7 +13,7 @@ export const getBeds = async (
     method: HTTP_METHOD.GET,
     url: `/bed`,
     params: {
-      s: pageQueryStrings.s,
+      keyword: pageQueryStrings.keyword,
     },
   });
   return data;

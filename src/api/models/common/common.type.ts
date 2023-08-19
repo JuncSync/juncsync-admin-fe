@@ -1,3 +1,3 @@
 export type PageQueryStrings = {
-  s?: string;
+  keyword?: string;
 };
