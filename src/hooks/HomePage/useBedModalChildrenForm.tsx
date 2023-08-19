@@ -211,21 +211,33 @@ const useBedModalChildrenForm = () => {
                       handleChange={(event) => onChangeRadio(event, 'severity')}
                     />
                     <Radio
-                      title="Critical"
-                      value="Critical"
-                      checked={form.severity === 'Critical'}
+                      title="Level1"
+                      value="Level1"
+                      checked={form.severity === 'Level1'}
                       handleChange={(event) => onChangeRadio(event, 'severity')}
                     />
                     <Radio
-                      title="Severe"
-                      value="Severe"
-                      checked={form.severity === 'Severe'}
+                      title="Level2"
+                      value="Level2"
+                      checked={form.severity === 'Level2'}
                       handleChange={(event) => onChangeRadio(event, 'severity')}
                     />
                     <Radio
-                      title="Moderate"
-                      value="Moderate"
-                      checked={form.severity === 'Moderate'}
+                      title="Level3"
+                      value="Level3"
+                      checked={form.severity === 'Level3'}
+                      handleChange={(event) => onChangeRadio(event, 'severity')}
+                    />
+                    <Radio
+                      title="Level4"
+                      value="Level4"
+                      checked={form.severity === 'Level4'}
+                      handleChange={(event) => onChangeRadio(event, 'severity')}
+                    />
+                    <Radio
+                      title="Level5"
+                      value="Level5"
+                      checked={form.severity === 'Level5'}
                       handleChange={(event) => onChangeRadio(event, 'severity')}
                     />
                   </div>

@@ -17,7 +17,7 @@ const Radio = ({
 }: Props): ReactElement => {
   return (
     <label className="flex items-center gap-2">
-      <div className="relative">
+      <div className="relative flex items-center">
         <input
           className="appearance-none w-4 h-4 bg-white border border-solid border-gray_300 rounded-lg checked:border checked:border-solid checked:border-orange"
           type="radio"
