@@ -7,7 +7,7 @@ import Radio from '@/components/Common/Radio';
 import DiseaseBed, { DiseaseBedType } from '@/components/Feature/DiseaseBed';
 import HomeLayout from '@/components/Feature/Layout/HomeLayout';
 
-const INITIAL_FORM = {
+export const INITIAL_FORM = {
   bedCode: '',
   patientCode: '',
   patientAge: '',
@@ -254,7 +254,7 @@ const HomePageMain = () => {
     open();
   }, [bedModalChildren]);
 
-  const handleModifyBed = useCallback(
+  const handleEditBed = useCallback(
     (bed: DiseaseBedType) => {
       setSelectedBed(bed);
       setType('modify');
@@ -285,7 +285,7 @@ const HomePageMain = () => {
     [bedModalChildren],
   );
 
-  const handleDeleteBed = useCallback(
+  const handleDischargeBed = useCallback(
     (bed: DiseaseBedType) => {
       setSelectedBed(bed);
       setType('delete');
@@ -324,12 +324,12 @@ const HomePageMain = () => {
           break;
         case 'modify':
           if (selectedBed) {
-            handleModifyBed(selectedBed);
+            handleEditBed(selectedBed);
           }
           break;
         case 'delete':
           if (selectedBed) {
-            handleDeleteBed(selectedBed);
+            handleDischargeBed(selectedBed);
           }
           break;
       }
@@ -338,8 +338,8 @@ const HomePageMain = () => {
     isOpen,
     type,
     handleAddBed,
-    handleModifyBed,
-    handleDeleteBed,
+    handleEditBed,
+    handleDischargeBed,
     selectedBed,
   ]);
 
@@ -367,9 +367,9 @@ const HomePageMain = () => {
               <DiseaseBed
                 key={bed.id}
                 bed={bed}
-                handleAddBed={handleAddBed}
-                handleModifyBed={handleModifyBed}
-                handleDeleteBed={handleDeleteBed}
+                handleAdd={handleAddBed}
+                handleEdit={handleEditBed}
+                handleDischarge={handleDischargeBed}
                 setForm={setForm}
               />
             ))}

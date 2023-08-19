@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
-import React from 'react';
+
+import { INITIAL_FORM } from '@/pageComponents/HomePageMain';
 
 import Button from '@/components/Common/Button';
 
@@ -19,20 +20,24 @@ export interface DiseaseBedType {
 
 const DiseaseBed = ({
   bed,
-  handleAddBed,
-  handleModifyBed,
-  handleDeleteBed,
+  handleAdd,
+  handleEdit,
+  handleDischarge,
   setForm,
 }: {
   bed: DiseaseBedType;
-  handleAddBed: () => void;
-  handleModifyBed: (bed: DiseaseBedType) => void;
-  handleDeleteBed: (bed: DiseaseBedType) => void;
+  handleAdd: () => void;
+  handleEdit: (bed: DiseaseBedType) => void;
+  handleDischarge: (bed: DiseaseBedType) => void;
   setForm?: any;
 }) => {
   const { id, bedCode, isEmpty, isWaiting, createdAt } = bed;
 
-  const onSetFormHoverOrModify = () => {
+  const onSetFormAdd = () => {
+    setForm(INITIAL_FORM);
+  };
+
+  const onSetFormDischargeOrEdit = () => {
     setForm({
       bedCode: bed.bedCode,
       patientCode: bed.patientCode ?? '',
@@ -77,7 +82,8 @@ const DiseaseBed = ({
             text="Admission"
             size="sm"
             customClassName="w-[100px] h-[30px]"
-            onClick={handleAddBed}
+            onClick={handleAdd}
+            onMouseOver={onSetFormAdd}
           />
         ) : (
           <div className="flex items-center gap-[8px]">
@@ -86,16 +92,16 @@ const DiseaseBed = ({
               text="Disch"
               size="sm"
               customClassName="min-w-[78px] h-[30px]"
-              onClick={() => handleDeleteBed(bed)}
-              onMouseOver={onSetFormHoverOrModify}
+              onClick={() => handleDischarge(bed)}
+              onMouseOver={onSetFormDischargeOrEdit}
             />
             <Button
               buttonType="Primary"
               text="Edit"
               size="sm"
               customClassName="min-w-[78px] h-[30px]"
-              onClick={() => handleModifyBed(bed)}
-              onMouseOver={onSetFormHoverOrModify}
+              onClick={() => handleEdit(bed)}
+              onMouseOver={onSetFormDischargeOrEdit}
             />
           </div>
         )}
