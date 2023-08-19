@@ -162,12 +162,14 @@ const useBedModalChildrenForm = () => {
                   value="Female"
                   checked={form.gender === 'Female'}
                   handleChange={(event) => onChangeRadio(event, 'gender')}
+                  disabled={type === 'Discharge' && form.gender === 'Male'}
                 />
                 <Radio
                   title="Male"
                   value="Male"
                   checked={form.gender === 'Male'}
                   handleChange={(event) => onChangeRadio(event, 'gender')}
+                  disabled={type === 'Discharge' && form.gender === 'Female'}
                 />
               </div>
             </div>
