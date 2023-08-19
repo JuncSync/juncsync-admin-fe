@@ -4,8 +4,8 @@ import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
 import { useModal } from '@/components/Common/Modal/Modal.hooks';
 import Radio from '@/components/Common/Radio';
-import Sidebar from '@/components/Common/Sidebar';
 import DiseaseBed, { DiseaseBedType } from '@/components/Feature/DiseaseBed';
+import HomeLayout from '@/components/Feature/Layout/HomeLayout';
 
 const INITIAL_FORM = {
   bedCode: '',
@@ -344,33 +344,7 @@ const HomePageMain = () => {
   ]);
 
   return (
-    <div className="flex">
-      <Sidebar>
-        <div className="w-full flex flex-col">
-          <div className="py-5 px-8">
-            <button className="flex items-center gap-2 text-orange font-semibold text-lg">
-              <img className="w-4 h-4" src="/patient-room.svg" alt="활성화" />
-              Patient Room A
-            </button>
-          </div>
-          <div className="py-5 px-8">
-            <button className="flex items-center gap-2 text-gray_700 font-semibold text-lg">
-              <img
-                className="w-4 h-4"
-                src="/patient-room--inactive.svg"
-                alt="비활성화"
-              />
-              Patient Room B
-            </button>
-          </div>
-          <div className="py-5 px-8">
-            <button className="flex items-center gap-2 text-gray_400 font-semibold text-lg">
-              <img className="w-4 h-4" src="/plus.svg" alt="추가" />
-              Add Patient Room
-            </button>
-          </div>
-        </div>
-      </Sidebar>
+    <HomeLayout>
       <div className="w-full flex flex-col">
         <nav className="w-full py-5 px-10 flex items-center justify-between border-b border-solid border-gray_300">
           <Input
@@ -403,7 +377,7 @@ const HomePageMain = () => {
         </main>
       </div>
       {isOpen && render()}
-    </div>
+    </HomeLayout>
   );
 };
 
