@@ -8,8 +8,10 @@ module.exports = {
         white: '#fff',
         black: '#000',
         gray: '#D9D9D9',
+        gray_200: '#F1F1F1',
         gray_300: '#E3E3E3',
         gray_400: '#D2D2D2',
+        gray_700: '#717171',
       },
       dropShadow: {
         container: 'drop-shadow(0px 4px 44px rgba(0, 0, 0, 0.12))',

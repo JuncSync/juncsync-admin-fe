@@ -4,19 +4,16 @@ import { ILayoutProps } from '@/interfaces/layout.type';
 
 const Sidebar = ({ children }: ILayoutProps) => {
   return (
-    <aside className="flex flex-col items-center w-[301px] min-h-screen bg-white border-r-[1px] border-solid border-gray">
-      <div className="w-full border-b-[1px] border-solid border-gray border-opacity-[0.2] pl-[40px] py-[23px]">
-        <img
-          className="w-[186px] h-[51px]"
-          src="/service-letter.svg"
-          alt="서비스 글자"
-        />
+    <aside className="flex flex-col items-center min-w-[280px] min-h-screen bg-white border-r border-solid border-gray_200">
+      <div className="w-full border-b border-solid border-gray_200 py-5 px-8">
+        <img className="w-[124px] h-[32px]" src="/logo.svg" alt="로고" />
       </div>
-      <div className="w-full flex-1 border-b-[1px] border-solid border-gray border-opacity-[0.2]">
+      <div className="w-full flex-1 border-b border-solid border-gray_200">
         {children}
       </div>
-      <button className="w-fit py-[32px] pl-[40px] text-black text-[32px] text-opacity-[0.3] self-start">
-        로그아웃
+      <button className="w-fit py-5 px-8 font-semibold text-gray_700 text-lg self-start flex items-center gap-2">
+        <img src="/logout.svg" alt="로그아웃" />
+        Logout
       </button>
     </aside>
   );
