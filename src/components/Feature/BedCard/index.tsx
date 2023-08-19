@@ -57,7 +57,9 @@ const BedCard = ({
             ? 'Vacant Bed'
             : isWaiting
             ? 'Waiting'
-            : `${bed.patient?.name}(${bed.patient?.birthYear})`}
+            : `${bed.patient?.name}(${
+                dayjs(new Date()).year() - Number(bed.patient?.birthYear) + 1
+              })`}
         </h1>
         <div className="flex items-center gap-2">
           <img src="/fracture.svg" alt="fracture" />
