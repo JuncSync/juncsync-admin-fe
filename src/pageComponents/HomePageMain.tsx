@@ -137,7 +137,7 @@ const HomePageMain = () => {
               <Input
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
                 id="diagnosis"
-                value={form.diagnosis}
+                value={form?.diagnosis ?? ''}
                 name="diagnosis"
                 onChange={onChangeForm}
                 placeholder="Diagnosis"
@@ -154,7 +154,7 @@ const HomePageMain = () => {
               <Input
                 id="patient-code"
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
-                value={form.patientCode}
+                value={form?.patientCode ?? ''}
                 name="patientCode"
                 onChange={onChangeForm}
                 placeholder="Patient ID"
@@ -168,7 +168,7 @@ const HomePageMain = () => {
               <div className="flex items-center gap-2">
                 <Input
                   inputClassName="w-[101px] h-[56px] py-4 px-5"
-                  value={form.birthMonth}
+                  value={form?.birthMonth ?? ''}
                   name="birthMonth"
                   onChange={onChangeForm}
                   placeholder="MM"
@@ -178,7 +178,7 @@ const HomePageMain = () => {
                 />
                 <Input
                   inputClassName="w-[101px] h-[56px] py-4 px-5"
-                  value={form.birthDay}
+                  value={form?.birthDay ?? ''}
                   name="birthDay"
                   onChange={onChangeForm}
                   placeholder="DD"
@@ -188,7 +188,7 @@ const HomePageMain = () => {
                 />
                 <Input
                   inputClassName="w-[101px] h-[56px] py-4 px-5"
-                  value={form.birthYear}
+                  value={form?.birthYear ?? ''}
                   name="birthYear"
                   onChange={onChangeForm}
                   placeholder="YYYY"
@@ -208,7 +208,7 @@ const HomePageMain = () => {
               <Input
                 id="patient-name"
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
-                value={form.name}
+                value={form?.name ?? ''}
                 name="name"
                 onChange={onChangeForm}
                 placeholder="Patient Name"
@@ -241,7 +241,7 @@ const HomePageMain = () => {
               <div className="flex items-center gap-2">
                 <Input
                   inputClassName="w-[150px] h-[56px] py-4 px-5"
-                  value={form.etaHour}
+                  value={form?.etaHour ?? ''}
                   name="etaHour"
                   onChange={onChangeForm}
                   placeholder="00"
@@ -252,7 +252,7 @@ const HomePageMain = () => {
                 <span className="text-gray_400 text-lg font-normal">:</span>
                 <Input
                   inputClassName="w-[150px] h-[56px] py-4 px-5"
-                  value={form.etaMin}
+                  value={form?.etaMin ?? ''}
                   name="etaMin"
                   onChange={onChangeForm}
                   placeholder="00"
@@ -369,20 +369,20 @@ const HomePageMain = () => {
             text: 'Save',
             action: () => {
               // TODO: 테스트 필요
-              if (bed.patientId && bed.patient?.name)
+              if (bed.patientId && form.name)
                 putPatientMutate(
                   {
                     patientId: bed.patientId?.toString(),
                     payload: {
-                      name: bed.patient?.name,
-                      gender: bed.patient?.gender,
-                      diagnosis: bed.patient?.diagnosis,
-                      birthYear: Number(bed.patient?.birthYear),
-                      birthMonth: Number(bed.patient?.birthMonth),
-                      birthDay: Number(bed.patient?.birthDay),
-                      severity: bed.patient?.severity,
-                      etaHour: Number(bed.patient?.etaHour),
-                      etaMin: Number(bed.patient?.etaMin),
+                      name: form.name,
+                      gender: form.gender,
+                      diagnosis: form.diagnosis,
+                      birthYear: Number(form.birthYear),
+                      birthMonth: Number(form.birthMonth),
+                      birthDay: Number(form.birthDay),
+                      severity: form.severity,
+                      etaHour: Number(form.etaHour),
+                      etaMin: Number(form.etaMin),
                     },
                   },
                   {
@@ -472,7 +472,27 @@ const HomePageMain = () => {
       return;
     }
 
-    setBeds(data);
+    const preprocessedData = data.map((d) => ({
+      id: d.id,
+      hospitalId: d.hospital_id,
+      patientId: d?.patient_id,
+      patient: {
+        id: d.patient?.id,
+        name: d.patient?.name,
+        birthMonth: d.patient?.birth_month,
+        birthDay: d.patient?.birth_day,
+        birthYear: d.patient?.birth_year,
+        createdAt: d.patient?.createdAt,
+        diagnosis: d.patient?.diagnosis,
+        etaHour: d.patient?.eta_hour,
+        etaMin: d.patient?.eta_min,
+        gender: d.patient?.gender,
+        hospitalId: d.patient?.hospital_id,
+        severity: d.patient?.severity,
+      },
+    })) as Bed[];
+
+    setBeds(preprocessedData);
   }, [data, isLoading]);
 
   useEffect(() => {

@@ -61,7 +61,18 @@ const LoginPageMain = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center bg-orange w-full min-h-screen">
+    <div
+      className="flex justify-center items-center w-full min-h-screen"
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundImage: `url("/login-bg.webp")`,
+      }}
+    >
       <form
         className="w-[400px] h-[418px] bg-white drop-shadow-container rounded-xl p-10 flex flex-col justify-center items-center gap-4"
         onSubmit={onSubmit}

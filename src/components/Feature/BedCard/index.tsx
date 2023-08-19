@@ -8,10 +8,6 @@ import { Bed } from '@/api/models/bed/bed.type';
 
 import { generateRandomPatientCode } from '@/utils/random.util';
 
-// etaHour: '',
-// etaMin: '',
-// severity: '',
-
 const BedCard = ({
   bed,
   handleAdd,
@@ -39,7 +35,7 @@ const BedCard = ({
   const onSetFormDischargeOrEdit = () => {
     setForm({
       bedCode: bed.id,
-      patientCode: generateRandomPatientCode(),
+      patientCode: bed.patientId,
       name: bed.patient?.name,
       etaHour: bed.patient?.etaHour ?? '',
       etaMin: bed.patient?.etaMin ?? '',
