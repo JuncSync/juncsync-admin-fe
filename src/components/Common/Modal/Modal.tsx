@@ -38,7 +38,7 @@ const Modal = ({
 
   return (
     <div
-      className="z-50 fixed top-0 left-0 w-screen h-screen bg-[#ACACAC] bg-opacity-60"
+      className="z-50 fixed top-0 left-0 w-screen h-screen bg-black_300"
       onClick={onClickOutside}
       onKeyUp={onKeyUpOutside}
     >

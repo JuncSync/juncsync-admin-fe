@@ -14,6 +14,7 @@ module.exports = {
         gray_400: '#D2D2D2',
         gray_700: '#717171',
         gray_900: '#1B1B1B',
+        black_300: 'rgba(0, 0, 0, 0.30)',
       },
       dropShadow: {
         container: 'drop-shadow(0px 4px 44px rgba(0, 0, 0, 0.12))',
