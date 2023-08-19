@@ -2,13 +2,10 @@ import { queryKeys } from '@/react-query/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 
 import { getBeds } from '@/api/models/bed/bed.api';
-import { PageQueryStrings } from '@/api/models/common/common.type';
 
-export const useGetBedsQuery = (pageQueryString: PageQueryStrings) => {
+export const useGetBedsQuery = () => {
   const { data, isLoading, isSuccess, isError, isFetching, isFetched } =
-    useQuery([queryKeys.GetBeds, pageQueryString.s], () =>
-      getBeds(pageQueryString.s),
-    );
+    useQuery([queryKeys.GetBeds], getBeds);
 
   return { data, isLoading, isSuccess, isError, isFetching, isFetched };
 };

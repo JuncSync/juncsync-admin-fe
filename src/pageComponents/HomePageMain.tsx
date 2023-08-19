@@ -1,87 +1,58 @@
 import { queryClient } from '@/react-query/queryClient';
 import { queryKeys } from '@/react-query/queryKeys';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
 import { useModal } from '@/components/Common/Modal/Modal.hooks';
 import Radio from '@/components/Common/Radio';
-import DiseaseBed, { DiseaseBedType } from '@/components/Feature/DiseaseBed';
+import BedCard from '@/components/Feature/BedCard';
 import HomeLayout from '@/components/Feature/Layout/HomeLayout';
 
-import { SEARCH_DEBOUNCE_TIME } from '@/constants/time';
+import { Bed } from '@/api/models/bed/bed.type';
 
-import {
-  usePostBedInMutation,
-  usePostBedOutMutation,
-} from '@/hooks/query/bed/useBedMutation';
+import { usePostBedOutMutation } from '@/hooks/query/bed/useBedMutation';
 import { useGetBedsQuery } from '@/hooks/query/bed/useBedQuery';
-import useDebounce from '@/hooks/useDebounce';
+import { usePostPatientAdmission } from '@/hooks/query/patient/usePatientMutation';
 
 export const INITIAL_FORM = {
   bedCode: '',
   patientCode: '',
-  patientAge: '',
-  patientName: '',
-  patientSex: 'Female',
-  diseaseName: '',
+  name: '',
+  etaHour: '',
+  etaMin: '',
+  diagnosis: '',
+  birthMonth: '',
+  birthDay: '',
+  birthYear: '',
+  gender: 'Female',
+  severity: 'None',
 };
 
 const HomePageMain = () => {
-  const [beds, setBeds] = useState<DiseaseBedType[]>([
-    {
-      id: '1',
-      bedCode: 'A-01',
-      patientCode: '19D1LKS',
-      patientAge: 24,
-      patientName: '김진호',
-      patientSex: 'Male',
-      diseaseName: '골절',
-      diseaseCode: '82-DA',
-      isEmpty: false,
-      isWaiting: false,
-      createdAt: Date.now(),
-    },
-    {
-      id: '2',
-      bedCode: 'A-02',
-      isEmpty: true,
-      isWaiting: false,
-      createdAt: Date.now(),
-    },
-    {
-      id: '3',
-      bedCode: 'A-02',
-      isEmpty: false,
-      isWaiting: true,
-      createdAt: Date.now(),
-    },
-  ]);
+  const [beds, setBeds] = useState<Bed[]>([]);
 
   const [type, setType] = useState('');
-  const [selectedBed, setSelectedBed] = useState<DiseaseBedType | null>(null);
+  const [selectedBed, setSelectedBed] = useState<Bed | null>(null);
 
   const [form, setForm] = useState(INITIAL_FORM);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchValue, setSearchValue] = useState<string>(
-    searchParams.get('patient-name') ?? '',
-  );
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchValue, setSearchValue] = useState<string>(
+  //   searchParams.get('keyword') ?? '',
+  // );
 
-  const onSearchValue: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { value } = event.target;
+  // const onSearchKeyword: ChangeEventHandler<HTMLInputElement> = (event) => {
+  //   const { value } = event.target;
 
-    setSearchValue(value);
-  };
+  //   setSearchValue(value);
+  // };
 
-  const searchPatientName = useDebounce(searchValue, SEARCH_DEBOUNCE_TIME);
+  // const searchKeyword = useDebounce(searchValue, SEARCH_DEBOUNCE_TIME);
 
-  const { data, isLoading } = useGetBedsQuery({
-    s: searchValue,
-  });
+  const { data, isLoading } = useGetBedsQuery();
 
-  const { mutate: postBedInMutate } = usePostBedInMutation();
+  const { mutate: postPatientMutate } = usePostPatientAdmission();
   const { mutate: postBedOutMutate } = usePostBedOutMutation();
 
   const reset = () => {
@@ -103,7 +74,13 @@ const HomePageMain = () => {
   const onChangeGender: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
 
-    setForm((prev) => ({ ...prev, patientSex: value }));
+    setForm((prev) => ({ ...prev, gender: value }));
+  };
+
+  const onChangeSeverity: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { value } = event.target;
+
+    setForm((prev) => ({ ...prev, severity: value }));
   };
 
   const bedModalChildren = useCallback(
@@ -126,33 +103,32 @@ const HomePageMain = () => {
             <div className="flex flex-col gap-2">
               <label
                 className="w-fit text-gray_700 font-medium text-sm"
-                htmlFor="bed-id"
+                htmlFor="bed-code"
               >
                 Bed number
               </label>
               <Input
-                id="bed-id"
+                id="bed-code"
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
-                value={form.bedCode}
+                value={`A-00${form.bedCode}`}
                 name="bedCode"
                 onChange={onChangeForm}
                 placeholder="Bed number"
-                autoFocus
-                disabled={type === 'delete'}
+                disabled
               />
             </div>
             <div className="flex flex-col gap-2">
               <label
                 className="w-fit text-gray_700 font-medium text-sm"
-                htmlFor="disease-name"
+                htmlFor="diagnosis"
               >
                 Diagnosis
               </label>
               <Input
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
-                id="disease-name"
-                value={form.diseaseName}
-                name="diseaseName"
+                id="diagnosis"
+                value={form.diagnosis}
+                name="diagnosis"
                 onChange={onChangeForm}
                 placeholder="Diagnosis"
                 disabled={type === 'delete'}
@@ -161,12 +137,12 @@ const HomePageMain = () => {
             <div className="flex flex-col gap-2">
               <label
                 className="w-fit text-gray_700 font-medium text-sm"
-                htmlFor="patient-no"
+                htmlFor="patient-code"
               >
                 Patient ID
               </label>
               <Input
-                id="patient-no"
+                id="patient-code"
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
                 value={form.patientCode}
                 name="patientCode"
@@ -182,27 +158,33 @@ const HomePageMain = () => {
               <div className="flex items-center gap-2">
                 <Input
                   inputClassName="w-[101px] h-[56px] py-4 px-5"
-                  value={form.patientAge}
-                  name="patientAge"
+                  value={form.birthMonth}
+                  name="birthMonth"
                   onChange={onChangeForm}
                   placeholder="MM"
                   disabled={type === 'delete'}
+                  type="number"
+                  max="2"
                 />
                 <Input
                   inputClassName="w-[101px] h-[56px] py-4 px-5"
-                  value={form.patientAge}
-                  name="patientAge"
+                  value={form.birthDay}
+                  name="birthDay"
                   onChange={onChangeForm}
                   placeholder="DD"
                   disabled={type === 'delete'}
+                  type="number"
+                  max="2"
                 />
                 <Input
                   inputClassName="w-[101px] h-[56px] py-4 px-5"
-                  value={form.patientAge}
-                  name="patientAge"
+                  value={form.birthYear}
+                  name="birthYear"
                   onChange={onChangeForm}
                   placeholder="YYYY"
                   disabled={type === 'delete'}
+                  type="number"
+                  max="4"
                 />
               </div>
             </div>
@@ -216,8 +198,8 @@ const HomePageMain = () => {
               <Input
                 id="patient-name"
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
-                value={form.patientName}
-                name="patientName"
+                value={form.name}
+                name="name"
                 onChange={onChangeForm}
                 placeholder="Patient Name"
                 disabled={type === 'delete'}
@@ -231,26 +213,75 @@ const HomePageMain = () => {
                 <Radio
                   title="Female"
                   value="Female"
-                  checked={form.patientSex === 'Female'}
+                  checked={form.gender === 'Female'}
                   handleChange={onChangeGender}
                 />
                 <Radio
                   title="Male"
                   value="Male"
-                  checked={form.patientSex === 'Male'}
+                  checked={form.gender === 'Male'}
                   handleChange={onChangeGender}
                 />
               </div>
-
-              {/* <Input
-                id="patient-sex"
-                inputClassName="w-[320px] h-[56px] py-4 px-5"
-                value={form.patientSex}
-                name="patientSex"
-                onChange={onChangeForm}
-                placeholder="Gender"
-                disabled={type === 'delete'}
-              /> */}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="w-fit text-gray_700 font-medium text-sm">
+                ETA (Optional)
+              </label>
+              <div className="flex items-center gap-2">
+                <Input
+                  inputClassName="w-[150px] h-[56px] py-4 px-5"
+                  value={form.etaHour}
+                  name="etaHour"
+                  onChange={onChangeForm}
+                  placeholder="00"
+                  disabled={type === 'delete'}
+                  type="number"
+                  max="2"
+                />
+                <span className="text-gray_400 text-lg font-normal">:</span>
+                <Input
+                  inputClassName="w-[150px] h-[56px] py-4 px-5"
+                  value={form.etaMin}
+                  name="etaMin"
+                  onChange={onChangeForm}
+                  placeholder="00"
+                  disabled={type === 'delete'}
+                  type="number"
+                  max="2"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="w-fit text-gray_700 font-medium text-sm">
+                Severity Levels
+              </label>
+              <div className="flex items-center gap-4 flex-wrap">
+                <Radio
+                  title="None"
+                  value="None"
+                  checked={form.severity === 'None'}
+                  handleChange={onChangeSeverity}
+                />
+                <Radio
+                  title="Critical"
+                  value="Critical"
+                  checked={form.severity === 'Critical'}
+                  handleChange={onChangeSeverity}
+                />
+                <Radio
+                  title="Severe"
+                  value="Severe"
+                  checked={form.severity === 'Severe'}
+                  handleChange={onChangeSeverity}
+                />
+                <Radio
+                  title="Moderate"
+                  value="Moderate"
+                  checked={form.severity === 'Moderate'}
+                  handleChange={onChangeSeverity}
+                />
+              </div>
             </div>
           </div>
         </form>
@@ -276,6 +307,28 @@ const HomePageMain = () => {
           type: 'Primary',
           text: 'Save',
           action: () => {
+            // FIXME: Wrong Hospital...?
+            postPatientMutate(
+              {
+                bedId: Number(form.bedCode),
+                patientId: form.patientCode,
+                name: form.name,
+                gender: form.gender,
+                diagnosis: form.diagnosis,
+                birthYear: Number(form.birthYear),
+                birthMonth: Number(form.birthMonth),
+                birthDay: Number(form.birthDay),
+                severity: form.severity,
+                etaHour: Number(form.etaHour),
+                etaMin: Number(form.etaMin),
+              },
+              {
+                onSuccess: () => {
+                  queryClient.invalidateQueries([queryKeys.GetBeds]);
+                },
+              },
+            );
+
             reset();
             close();
           },
@@ -287,7 +340,7 @@ const HomePageMain = () => {
   }, [bedModalChildren]);
 
   const handleEditBed = useCallback(
-    (bed: DiseaseBedType) => {
+    (bed: Bed) => {
       setSelectedBed(bed);
       setType('modify');
       setData({
@@ -305,8 +358,6 @@ const HomePageMain = () => {
             type: 'Primary',
             text: 'Save',
             action: () => {
-              // TODO: Bed In 하고 그 이후에 환자 정보 업데이트
-              const res = postBedInMutate(bed.id);
               reset();
               close();
             },
@@ -320,7 +371,7 @@ const HomePageMain = () => {
   );
 
   const handleDischargeBed = useCallback(
-    (bed: DiseaseBedType) => {
+    (bed: Bed) => {
       setSelectedBed(bed);
       setType('delete');
       setData({
@@ -338,7 +389,7 @@ const HomePageMain = () => {
             type: 'Primary',
             text: 'Discharge',
             action: () => {
-              postBedOutMutate(bed.id, {
+              postBedOutMutate(bed.id.toString(), {
                 onSuccess: () => {
                   // TODO: Test
                   queryClient.invalidateQueries([queryKeys.GetBeds]);
@@ -388,13 +439,12 @@ const HomePageMain = () => {
       return;
     }
 
-    // TODO: setBeds
-    // console.log(data);
+    setBeds(data);
   }, [data, isLoading]);
 
-  useEffect(() => {
-    setSearchParams({ 'patient-name': searchPatientName });
-  }, [searchPatientName]);
+  // useEffect(() => {
+  //   setSearchParams({ 'patient-name': searchPatientName });
+  // }, [searchPatientName]);
 
   return (
     <HomeLayout>
@@ -404,8 +454,8 @@ const HomePageMain = () => {
             type="search"
             placeholder="Search by patient name"
             inputClassName="min-w-[320px] h-10 py-2 px-5"
-            value={searchValue}
-            onChange={onSearchValue}
+            // value={searchValue}
+            // onChange={onSearchKeyword}
           />
           <Button
             type="button"
@@ -419,7 +469,7 @@ const HomePageMain = () => {
         <main className="w-full flex-1 bg-gray_100 py-10 px-20">
           <div className="flex flex-wrap gap-8">
             {beds.map((bed) => (
-              <DiseaseBed
+              <BedCard
                 key={bed.id}
                 bed={bed}
                 handleAdd={handleAddBed}

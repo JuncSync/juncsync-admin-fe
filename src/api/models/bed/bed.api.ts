@@ -5,22 +5,10 @@ import { axiosRequester } from '@/api/axios/axiosRequester';
 import { Bed } from './bed.type';
 
 // 병상 조회
-export const getBeds = async (s?: string): Promise<Bed[]> => {
+export const getBeds = async (): Promise<Bed[]> => {
   const { isOk, data } = await axiosRequester<Bed[]>({
     method: HTTP_METHOD.GET,
     url: `/bed`,
-    params: {
-      s,
-    },
-  });
-  return data;
-};
-
-// 환자 In
-export const postBedIn = async (bedId: string) => {
-  const { isOk, data } = await axiosRequester({
-    method: HTTP_METHOD.POST,
-    url: `/bed/in/${bedId}`,
   });
   return data;
 };
