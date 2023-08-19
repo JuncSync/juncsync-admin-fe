@@ -14,7 +14,7 @@ export const usePostBedInMutation = () => {
 
 export const usePostBedOutMutation = () => {
   const { mutate, isLoading, isSuccess, isError } = useMutation(
-    [queryKeys.postBedOut],
+    [queryKeys.PostBedOut],
     postBedOut,
   );
 

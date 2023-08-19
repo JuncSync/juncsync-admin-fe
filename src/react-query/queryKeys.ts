@@ -3,5 +3,7 @@ export const queryKeys = {
   GetUserInfo: 'GetUserInfo',
   GetBeds: 'GedBeds',
   PostBedIn: 'PostBedIn',
-  postBedOut: 'PostBedOut',
+  PostBedOut: 'PostBedOut',
+  GetPatients: 'GetPatients',
+  PostPatientBedIn: 'PostPatientBedIn',
 } as const;
