@@ -1,9 +1,4 @@
-import {
-  ChangeEventHandler,
-  FormEventHandler,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/Common/Button';
@@ -12,7 +7,6 @@ import Input from '@/components/Common/Input';
 import { COOKIE_ACCESS_TOKEN_KEY } from '@/constants/key';
 
 import { usePostLoginMutation } from '@/hooks/query/auth/useAuthMutation';
-import { useUserInfoQuery } from '@/hooks/query/auth/useAuthQuery';
 
 import { setCookie } from '@/utils/cookies.util';
 
@@ -27,8 +21,6 @@ const LoginPageMain = () => {
   });
 
   const { mutate } = usePostLoginMutation();
-
-  const { data, isLoading } = useUserInfoQuery();
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value, name } = event.target;
@@ -53,18 +45,6 @@ const LoginPageMain = () => {
       },
     );
   };
-
-  useEffect(() => {
-    if (!data || isLoading) {
-      return;
-    }
-
-    const { id, password, hospital_id: hospitalId } = data;
-
-    if (id && password && hospitalId) {
-      navigate('/');
-    }
-  }, [data, isLoading]);
 
   return (
     <div className="flex justify-center items-center bg-orange w-full min-h-screen">

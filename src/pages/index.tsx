@@ -1,25 +1,9 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import HomePageMain from '@/pageComponents/HomePageMain';
 
-import { useUserInfoQuery } from '@/hooks/query/auth/useAuthQuery';
+import useUserCheckForRedirection from '@/hooks/useUserCheckForRedirection';
 
 const HomePage = () => {
-  const navigate = useNavigate();
-  const { data, isLoading } = useUserInfoQuery();
-
-  useEffect(() => {
-    if (!data || isLoading) {
-      return;
-    }
-
-    const { id, password, hospital_id: hospitalId } = data;
-
-    if (!id || !password || !hospitalId) {
-      navigate('/login');
-    }
-  }, [data, isLoading]);
+  useUserCheckForRedirection('Home');
 
   return <HomePageMain />;
 };
