@@ -9,6 +9,8 @@ import Radio from '@/components/Common/Radio';
 import BedCard from '@/components/Feature/BedCard';
 import HomeLayout from '@/components/Feature/Layout/HomeLayout';
 
+import { INITIAL_FORM } from '@/constants/HomePage/form';
+
 import { Bed } from '@/api/models/bed/bed.type';
 
 import useSearchKeyword from '@/hooks/HomePage/useSearchKeyword';
@@ -18,20 +20,6 @@ import {
   usePostPatientAdmission,
   usePutPatientBedInMutation,
 } from '@/hooks/query/patient/usePatientMutation';
-
-export const INITIAL_FORM = {
-  bedCode: '',
-  patientCode: '',
-  name: '',
-  etaHour: '',
-  etaMin: '',
-  diagnosis: '',
-  birthMonth: '',
-  birthDay: '',
-  birthYear: '',
-  gender: 'Female',
-  severity: 'None',
-};
 
 const HomePageMain = () => {
   const [beds, setBeds] = useState<Bed[]>([]);
