@@ -48,7 +48,12 @@ const LoginPageMain = () => {
         password,
       },
       {
-        onSuccess: (data) => {
+        onSuccess: ({ isOk, data }) => {
+          if (!isOk) {
+            alert('계정을 올바르게 입력해주세요.');
+            return;
+          }
+
           setCookie(COOKIE_ACCESS_TOKEN_KEY, data, INFINITE_EXPIRE_TIME);
           navigate('/');
         },

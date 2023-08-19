@@ -11,7 +11,7 @@ export const postLogin = async (payload: AuthPayload) => {
     url: `/admin/login`,
     data: payload,
   });
-  return data;
+  return { isOk, data };
 };
 
 // 유저 조회: 유저 정보 조회
