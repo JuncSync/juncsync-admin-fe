@@ -1,3 +1,5 @@
+import { queryClient } from '@/react-query/queryClient';
+import { queryKeys } from '@/react-query/queryKeys';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 
 import Button from '@/components/Common/Button';
@@ -7,6 +9,10 @@ import Radio from '@/components/Common/Radio';
 import DiseaseBed, { DiseaseBedType } from '@/components/Feature/DiseaseBed';
 import HomeLayout from '@/components/Feature/Layout/HomeLayout';
 
+import {
+  usePostBedInMutation,
+  usePostBedOutMutation,
+} from '@/hooks/query/bed/useBedMutation';
 import { useGetBedsQuery } from '@/hooks/query/bed/useBedQuery';
 
 export const INITIAL_FORM = {
@@ -55,6 +61,9 @@ const HomePageMain = () => {
   const [form, setForm] = useState(INITIAL_FORM);
 
   const { data, isLoading } = useGetBedsQuery();
+
+  const { mutate: postBedInMutate } = usePostBedInMutation();
+  const { mutate: postBedOutMutate } = usePostBedOutMutation();
 
   const reset = () => {
     setType('');
@@ -277,6 +286,8 @@ const HomePageMain = () => {
             type: 'Primary',
             text: 'Save',
             action: () => {
+              // TODO: Bed In 하고 그 이후에 환자 정보 업데이트
+              const res = postBedInMutate(bed.id);
               reset();
               close();
             },
@@ -308,6 +319,12 @@ const HomePageMain = () => {
             type: 'Primary',
             text: 'Discharge',
             action: () => {
+              postBedOutMutate(bed.id, {
+                onSuccess: () => {
+                  // TODO: Test
+                  queryClient.invalidateQueries([queryKeys.GetBeds]);
+                },
+              });
               reset();
               close();
             },
@@ -353,7 +370,7 @@ const HomePageMain = () => {
     }
 
     // TODO: setBeds
-    console.log(data);
+    // console.log(data);
   }, [data, isLoading]);
 
   return (
