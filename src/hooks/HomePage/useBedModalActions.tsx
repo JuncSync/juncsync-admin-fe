@@ -52,7 +52,6 @@ const useBedModalActions = () => {
           type: 'Primary',
           text: 'Save',
           action: () => {
-            // FIXME: Wrong Hospital...?
             postPatientMutate(
               {
                 bedId: Number(form.bedCode),
@@ -103,8 +102,7 @@ const useBedModalActions = () => {
             type: 'Primary',
             text: 'Save',
             action: () => {
-              // TODO: 테스트 필요
-              if (bed.patientId && form.name)
+              if (bed.patientId) {
                 putPatientMutate(
                   {
                     patientId: bed.patientId?.toString(),
@@ -126,6 +124,7 @@ const useBedModalActions = () => {
                     },
                   },
                 );
+              }
               reset();
               close();
             },
@@ -159,7 +158,6 @@ const useBedModalActions = () => {
             action: () => {
               postBedOutMutate(bed.id.toString(), {
                 onSuccess: () => {
-                  // TODO: 테스트 필요
                   queryClient.invalidateQueries([queryKeys.GetBeds]);
                 },
               });
