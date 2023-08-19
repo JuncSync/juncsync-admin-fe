@@ -2,7 +2,7 @@ import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { COOKIE_ACCESS_TOKEN_KEY } from '@/constants/key';
 
-import { getCookie } from '@/utils/cookies.util';
+import { getCookie } from '@/utils/cookie';
 
 import { AxiosRequesterReturn, HTTPResponse } from './axios.type';
 import { axiosInstance } from './axiosInstance';

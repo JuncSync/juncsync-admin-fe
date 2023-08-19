@@ -14,7 +14,7 @@ import { INFINITE_EXPIRE_TIME } from '@/constants/time';
 
 import { usePostLoginMutation } from '@/hooks/query/auth/useAuthMutation';
 
-import { getCookie, setCookie } from '@/utils/cookies.util';
+import { getCookie, setCookie } from '@/utils/cookie';
 
 const LoginPageMain = () => {
   const navigate = useNavigate();

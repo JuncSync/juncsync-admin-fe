@@ -6,7 +6,7 @@ import { INITIAL_FORM } from '@/constants/HomePage/form';
 
 import { Bed } from '@/api/models/bed/bed.type';
 
-import { generateRandomPatientCode } from '@/utils/random.util';
+import { generateRandomPatientCode } from '@/utils/random';
 
 const BedCard = ({
   bed,
