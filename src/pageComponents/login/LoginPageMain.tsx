@@ -5,6 +5,7 @@ import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
 
 import { COOKIE_ACCESS_TOKEN_KEY } from '@/constants/key';
+import { INFINITE_EXPIRE_TIME } from '@/constants/time';
 
 import { usePostLoginMutation } from '@/hooks/query/auth/useAuthMutation';
 
@@ -39,7 +40,7 @@ const LoginPageMain = () => {
       },
       {
         onSuccess: (data) => {
-          setCookie(COOKIE_ACCESS_TOKEN_KEY, data);
+          setCookie(COOKIE_ACCESS_TOKEN_KEY, data, INFINITE_EXPIRE_TIME);
           navigate('/');
         },
       },
