@@ -3,6 +3,7 @@ import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
 import { useModal } from '@/components/Common/Modal/Modal.hooks';
+import Radio from '@/components/Common/Radio';
 import Sidebar from '@/components/Common/Sidebar';
 import DiseaseBed, { DiseaseBedType } from '@/components/Feature/DiseaseBed';
 
@@ -11,7 +12,7 @@ const INITIAL_FORM = {
   patientCode: '',
   patientAge: '',
   patientName: '',
-  patientSex: '',
+  patientSex: 'Female',
   diseaseName: '',
 };
 
@@ -23,7 +24,7 @@ const HomePageMain = () => {
       patientCode: '19D1LKS',
       patientAge: 24,
       patientName: '김진호',
-      patientSex: '남성',
+      patientSex: 'Male',
       diseaseName: '골절',
       diseaseCode: '82-DA',
       isEmpty: false,
@@ -65,6 +66,12 @@ const HomePageMain = () => {
     const { value, name } = event.target;
 
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const onChangeGender: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { value } = event.target;
+
+    setForm((prev) => ({ ...prev, patientSex: value }));
   };
 
   const bedModalChildren = useCallback(
@@ -185,12 +192,24 @@ const HomePageMain = () => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label
-                className="w-fit text-gray_700 font-medium text-sm"
-                htmlFor="patient-sex"
-              >
+              <label className="w-fit text-gray_700 font-medium text-sm">
                 Gender
               </label>
+              <div className="flex items-center gap-4">
+                <Radio
+                  title="Female"
+                  value="Female"
+                  checked={form.patientSex === 'Female'}
+                  handleChange={onChangeGender}
+                />
+                <Radio
+                  title="Male"
+                  value="Male"
+                  checked={form.patientSex === 'Male'}
+                  handleChange={onChangeGender}
+                />
+              </div>
+
               {/* <Input
                 id="patient-sex"
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
