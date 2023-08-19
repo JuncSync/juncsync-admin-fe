@@ -79,7 +79,8 @@ const HomePageMain = () => {
           />
         </nav>
         <main className="w-full flex-1 bg-gray_100 py-10 px-20">
-          <div className="flex flex-wrap gap-8 justify-center">
+          {/* TEMP: for column_3 flex styling */}
+          <div className="flex flex-wrap gap-8 justify-center column_3:justify-start">
             {beds.map((bed) => (
               <BedCard
                 key={bed.id}

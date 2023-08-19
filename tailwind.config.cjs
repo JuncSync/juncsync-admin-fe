@@ -2,6 +2,9 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    screens: {
+      column_3: '1680px',
+    },
     extend: {
       colors: {
         orange: '#FF6B00',
