@@ -95,7 +95,7 @@ const useBedModalChildrenForm = () => {
                 name="patientCode"
                 onChange={onChangeCommonForm}
                 placeholder="Patient ID"
-                disabled={type === 'Discharge'}
+                disabled
               />
             </div>
             <div className="flex flex-col gap-2">
