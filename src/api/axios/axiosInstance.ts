@@ -1,6 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
 
 import { BASE_API_URL, RESPONSE_ERROR } from '@/constants/api';
+import { COOKIE_ACCESS_TOKEN_KEY } from '@/constants/key';
+
+import { deleteCookie } from '@/utils/cookie';
 
 const createAxiosInstance = (): AxiosInstance => {
   const base = axios.create({
@@ -21,6 +24,7 @@ axiosInstance.interceptors.response.use(
     } = error;
 
     if (status === RESPONSE_ERROR.UNAUTHORIZED) {
+      deleteCookie(COOKIE_ACCESS_TOKEN_KEY);
       window.location.href = '/login';
       return Promise.resolve(error.message);
     }
