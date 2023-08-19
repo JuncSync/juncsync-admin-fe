@@ -5,7 +5,6 @@ import {
   postPatientAdmission,
   putPatientBedIn,
 } from '@/api/models/patient/patient.api';
-import { PatientBedInPayload } from '@/api/models/patient/patient.type';
 
 export const usePostPatientAdmission = () => {
   const { mutate, isLoading, isSuccess, isError } = useMutation(
@@ -16,13 +15,10 @@ export const usePostPatientAdmission = () => {
   return { mutate, isLoading, isSuccess, isError };
 };
 
-export const usePutPatientBedInMutation = (
-  patientId: string,
-  payload: PatientBedInPayload,
-) => {
+export const usePutPatientBedInMutation = () => {
   const { mutate, isLoading, isSuccess, isError } = useMutation(
     [queryKeys.PutPatientBedIn],
-    () => putPatientBedIn(patientId, payload),
+    putPatientBedIn,
   );
 
   return { mutate, isLoading, isSuccess, isError };

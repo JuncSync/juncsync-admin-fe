@@ -13,7 +13,10 @@ import { Bed } from '@/api/models/bed/bed.type';
 
 import { usePostBedOutMutation } from '@/hooks/query/bed/useBedMutation';
 import { useGetBedsQuery } from '@/hooks/query/bed/useBedQuery';
-import { usePostPatientAdmission } from '@/hooks/query/patient/usePatientMutation';
+import {
+  usePostPatientAdmission,
+  usePutPatientBedInMutation,
+} from '@/hooks/query/patient/usePatientMutation';
 
 export const INITIAL_FORM = {
   bedCode: '',
@@ -52,8 +55,9 @@ const HomePageMain = () => {
 
   const { data, isLoading } = useGetBedsQuery();
 
-  const { mutate: postPatientMutate } = usePostPatientAdmission();
   const { mutate: postBedOutMutate } = usePostBedOutMutation();
+  const { mutate: postPatientMutate } = usePostPatientAdmission();
+  const { mutate: putPatientMutate } = usePutPatientBedInMutation();
 
   const reset = () => {
     setType('');
@@ -358,6 +362,29 @@ const HomePageMain = () => {
             type: 'Primary',
             text: 'Save',
             action: () => {
+              // TODO: 테스트 필요
+              if (bed.patientId && bed.patient?.name)
+                putPatientMutate(
+                  {
+                    patientId: bed.patientId?.toString(),
+                    payload: {
+                      name: bed.patient?.name,
+                      gender: bed.patient?.gender,
+                      diagnosis: bed.patient?.diagnosis,
+                      birthYear: Number(bed.patient?.birthYear),
+                      birthMonth: Number(bed.patient?.birthMonth),
+                      birthDay: Number(bed.patient?.birthDay),
+                      severity: bed.patient?.severity,
+                      etaHour: Number(bed.patient?.etaHour),
+                      etaMin: Number(bed.patient?.etaMin),
+                    },
+                  },
+                  {
+                    onSuccess: () => {
+                      queryClient.invalidateQueries([queryKeys.GetBeds]);
+                    },
+                  },
+                );
               reset();
               close();
             },
@@ -391,7 +418,7 @@ const HomePageMain = () => {
             action: () => {
               postBedOutMutate(bed.id.toString(), {
                 onSuccess: () => {
-                  // TODO: Test
+                  // TODO: 테스트 필요
                   queryClient.invalidateQueries([queryKeys.GetBeds]);
                 },
               });
