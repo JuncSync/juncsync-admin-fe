@@ -10,18 +10,21 @@ import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
 
 import { COOKIE_ACCESS_TOKEN_KEY } from '@/constants/key';
+import { COMMON_BACKGROUND_IMAGE_STYLES } from '@/constants/style';
 import { INFINITE_EXPIRE_TIME } from '@/constants/time';
 
 import { usePostLoginMutation } from '@/hooks/query/auth/useAuthMutation';
 
 import { getCookie, setCookie } from '@/utils/cookie';
 
+type LoginForm = {
+  id: string;
+  password: string;
+};
+
 const LoginPageMain = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState<{
-    id: string;
-    password: string;
-  }>({
+  const [form, setForm] = useState<LoginForm>({
     id: '',
     password: '',
   });
@@ -30,6 +33,7 @@ const LoginPageMain = () => {
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value, name } = event.target;
+
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -64,12 +68,7 @@ const LoginPageMain = () => {
     <div
       className="flex justify-center items-center w-full min-h-screen"
       style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        backgroundPosition: 'center center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+        ...COMMON_BACKGROUND_IMAGE_STYLES,
         backgroundImage: `url("/login-bg.webp")`,
       }}
     >
