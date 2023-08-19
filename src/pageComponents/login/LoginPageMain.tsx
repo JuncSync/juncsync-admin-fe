@@ -1,16 +1,34 @@
-import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  useEffect,
+  useState,
+} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
 
+import { COOKIE_ACCESS_TOKEN_KEY } from '@/constants/key';
+
+import { usePostLoginMutation } from '@/hooks/query/auth/useAuthMutation';
+import { useUserInfoQuery } from '@/hooks/query/auth/useAuthQuery';
+
+import { setCookie } from '@/utils/cookies.util';
+
 const LoginPageMain = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState<{
     id: string;
-    pw: string;
+    password: string;
   }>({
     id: '',
-    pw: '',
+    password: '',
   });
+
+  const { mutate } = usePostLoginMutation();
+
+  const { data, isLoading } = useUserInfoQuery();
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value, name } = event.target;
@@ -19,7 +37,34 @@ const LoginPageMain = () => {
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
+
+    const { id, password } = form;
+
+    mutate(
+      {
+        id,
+        password,
+      },
+      {
+        onSuccess: (data) => {
+          setCookie(COOKIE_ACCESS_TOKEN_KEY, data);
+          navigate('/');
+        },
+      },
+    );
   };
+
+  useEffect(() => {
+    if (!data || isLoading) {
+      return;
+    }
+
+    const { id, password, hospital_id: hospitalId } = data;
+
+    if (id && password && hospitalId) {
+      navigate('/');
+    }
+  }, [data, isLoading]);
 
   return (
     <div className="flex justify-center items-center bg-orange w-full min-h-screen">
@@ -44,9 +89,9 @@ const LoginPageMain = () => {
             type="password"
             placeholder="PW"
             inputClassName="w-full py-4 px-5 h-14"
-            value={form.pw}
+            value={form.password}
             onChange={onChange}
-            name="pw"
+            name="password"
           />
           <Button
             type="submit"

@@ -1,6 +1,4 @@
 export const queryKeys = {
   PostLogin: 'PostLogin',
-  PostTokenRefresh: 'PostTokenRefresh',
-  GetUserCheck: 'GetUserCheck',
-  PostImageUpload: 'PostImageUpload',
+  GetUserInfo: 'GetUserInfo',
 } as const;
