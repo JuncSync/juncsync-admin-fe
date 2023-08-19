@@ -1,6 +1,7 @@
 import { queryClient } from '@/react-query/queryClient';
 import { queryKeys } from '@/react-query/queryKeys';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
@@ -9,11 +10,14 @@ import Radio from '@/components/Common/Radio';
 import DiseaseBed, { DiseaseBedType } from '@/components/Feature/DiseaseBed';
 import HomeLayout from '@/components/Feature/Layout/HomeLayout';
 
+import { SEARCH_DEBOUNCE_TIME } from '@/constants/time';
+
 import {
   usePostBedInMutation,
   usePostBedOutMutation,
 } from '@/hooks/query/bed/useBedMutation';
 import { useGetBedsQuery } from '@/hooks/query/bed/useBedQuery';
+import useDebounce from '@/hooks/useDebounce';
 
 export const INITIAL_FORM = {
   bedCode: '',
@@ -60,7 +64,22 @@ const HomePageMain = () => {
 
   const [form, setForm] = useState(INITIAL_FORM);
 
-  const { data, isLoading } = useGetBedsQuery();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState<string>(
+    searchParams.get('patient-name') ?? '',
+  );
+
+  const onSearchValue: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { value } = event.target;
+
+    setSearchValue(value);
+  };
+
+  const searchPatientName = useDebounce(searchValue, SEARCH_DEBOUNCE_TIME);
+
+  const { data, isLoading } = useGetBedsQuery({
+    s: searchValue,
+  });
 
   const { mutate: postBedInMutate } = usePostBedInMutation();
   const { mutate: postBedOutMutate } = usePostBedOutMutation();
@@ -373,6 +392,10 @@ const HomePageMain = () => {
     // console.log(data);
   }, [data, isLoading]);
 
+  useEffect(() => {
+    setSearchParams({ 'patient-name': searchPatientName });
+  }, [searchPatientName]);
+
   return (
     <HomeLayout>
       <div className="w-full flex flex-col">
@@ -381,6 +404,8 @@ const HomePageMain = () => {
             type="search"
             placeholder="Search by patient name"
             inputClassName="min-w-[320px] h-10 py-2 px-5"
+            value={searchValue}
+            onChange={onSearchValue}
           />
           <Button
             type="button"
