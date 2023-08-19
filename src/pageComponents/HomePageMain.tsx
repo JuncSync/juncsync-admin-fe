@@ -1,6 +1,8 @@
 import { queryClient } from '@/react-query/queryClient';
 import { queryKeys } from '@/react-query/queryKeys';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useDebounce } from 'usehooks-ts';
 
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
@@ -8,6 +10,8 @@ import { useModal } from '@/components/Common/Modal/Modal.hooks';
 import Radio from '@/components/Common/Radio';
 import BedCard from '@/components/Feature/BedCard';
 import HomeLayout from '@/components/Feature/Layout/HomeLayout';
+
+import { SEARCH_DEBOUNCE_TIME } from '@/constants/time';
 
 import { Bed } from '@/api/models/bed/bed.type';
 
@@ -40,20 +44,22 @@ const HomePageMain = () => {
 
   const [form, setForm] = useState(INITIAL_FORM);
 
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const [searchValue, setSearchValue] = useState<string>(
-  //   searchParams.get('keyword') ?? '',
-  // );
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState<string>(
+    searchParams.get('keyword') ?? '',
+  );
 
-  // const onSearchKeyword: ChangeEventHandler<HTMLInputElement> = (event) => {
-  //   const { value } = event.target;
+  const onSearchKeyword: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { value } = event.target;
 
-  //   setSearchValue(value);
-  // };
+    setSearchValue(value);
+  };
 
-  // const searchKeyword = useDebounce(searchValue, SEARCH_DEBOUNCE_TIME);
+  const searchKeyword = useDebounce(searchValue, SEARCH_DEBOUNCE_TIME);
 
-  const { data, isLoading } = useGetBedsQuery();
+  const { data, isLoading } = useGetBedsQuery({
+    s: searchKeyword,
+  });
 
   const { mutate: postBedOutMutate } = usePostBedOutMutation();
   const { mutate: postPatientMutate } = usePostPatientAdmission();
@@ -469,9 +475,9 @@ const HomePageMain = () => {
     setBeds(data);
   }, [data, isLoading]);
 
-  // useEffect(() => {
-  //   setSearchParams({ 'patient-name': searchPatientName });
-  // }, [searchPatientName]);
+  useEffect(() => {
+    setSearchParams({ keyword: searchKeyword });
+  }, [searchKeyword]);
 
   return (
     <HomeLayout>
@@ -481,8 +487,8 @@ const HomePageMain = () => {
             type="search"
             placeholder="Search by patient name"
             inputClassName="min-w-[320px] h-10 py-2 px-5"
-            // value={searchValue}
-            // onChange={onSearchKeyword}
+            value={searchValue}
+            onChange={onSearchKeyword}
           />
           <Button
             type="button"

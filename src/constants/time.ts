@@ -1,3 +1,3 @@
-export const SEARCH_DEBOUNCE_TIME = 1000;
+export const SEARCH_DEBOUNCE_TIME = 300;
 
 export const INFINITE_EXPIRE_TIME = 2147483647;
