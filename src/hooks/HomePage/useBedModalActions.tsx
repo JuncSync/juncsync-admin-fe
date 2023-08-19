@@ -202,7 +202,14 @@ const useBedModalActions = () => {
     selectedBed,
   ]);
 
-  return { handleAddBed, handleEditBed, handleDischargeBed, isOpen, render };
+  return {
+    handleAddBed,
+    handleEditBed,
+    handleDischargeBed,
+    isOpen,
+    render,
+    setForm,
+  };
 };
 
 export default useBedModalActions;

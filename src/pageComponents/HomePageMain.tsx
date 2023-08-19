@@ -8,7 +8,6 @@ import HomeLayout from '@/components/Feature/Layout/HomeLayout';
 import { Bed } from '@/api/models/bed/bed.type';
 
 import useBedModalActions from '@/hooks/HomePage/useBedModalActions';
-import useBedModalChildrenForm from '@/hooks/HomePage/useBedModalChildrenForm';
 import useSearchKeyword from '@/hooks/HomePage/useSearchKeyword';
 import { useGetBedsQuery } from '@/hooks/query/bed/useBedQuery';
 
@@ -18,9 +17,14 @@ const HomePageMain = () => {
   const { searchValue, searchKeyword, handleSearchKeyword } =
     useSearchKeyword();
 
-  const { setForm } = useBedModalChildrenForm();
-  const { handleAddBed, handleEditBed, handleDischargeBed, isOpen, render } =
-    useBedModalActions();
+  const {
+    handleAddBed,
+    handleEditBed,
+    handleDischargeBed,
+    isOpen,
+    render,
+    setForm,
+  } = useBedModalActions();
 
   const { data, isLoading } = useGetBedsQuery({
     s: searchKeyword,
