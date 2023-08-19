@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 
 import Button from '@/components/Common/Button';
@@ -71,121 +70,138 @@ const HomePageMain = () => {
   const bedModalChildren = useCallback(
     (type: 'add' | 'modify' | 'delete') => {
       return (
-        <form className="flex flex-col">
-          <h1 className="w-full flex justify-start mb-[32px] text-xl">
-            {type === 'add' ? '입원' : type === 'modify' ? '수정 병상' : '퇴원'}
+        <form className="w-full flex flex-col">
+          <h1 className="w-full flex justify-start text-xl font-semibold text-gray_900">
+            {type === 'add'
+              ? 'Admission'
+              : type === 'modify'
+              ? 'Edit'
+              : 'Discharge'}
           </h1>
-          <div
-            className={`grid grid-cols-2 gap-x-[55px] gap-y-[16px] ${classNames(
-              {
-                'bg-[#D9D9D9] bg-opacity-[0.2] rounded-lg p-4':
-                  type === 'delete',
-              },
-            )}`}
-          >
-            <div className="flex items-center justify-between gap-[30px]">
+          {type === 'delete' && (
+            <span className="mt-2 w-full flex justify-start items-center text-lg font-medium text-gray_700">
+              Are you sure you want to proceed with the discharge?
+            </span>
+          )}
+          <div className="grid grid-cols-2 gap-x-8 gap-y-6 mt-5">
+            <div className="flex flex-col gap-2">
               <label
-                className="w-fit text-black font-semibold text-xl"
+                className="w-fit text-gray_700 font-medium text-sm"
                 htmlFor="bed-id"
               >
-                병상번호
+                Bed number
               </label>
               <Input
                 id="bed-id"
-                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+                inputClassName="w-[320px] h-[56px] py-4 px-5"
                 value={form.bedCode}
                 name="bedCode"
                 onChange={onChangeForm}
+                placeholder="Bed number"
                 autoFocus
                 disabled={type === 'delete'}
               />
             </div>
-            <div className="flex items-center justify-between gap-[30px]">
+            <div className="flex flex-col gap-2">
               <label
-                className="w-fit text-black font-semibold text-xl"
+                className="w-fit text-gray_700 font-medium text-sm"
                 htmlFor="disease-name"
               >
-                병명
+                Diagnosis
               </label>
               <Input
-                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+                inputClassName="w-[320px] h-[56px] py-4 px-5"
                 id="disease-name"
                 value={form.diseaseName}
                 name="diseaseName"
                 onChange={onChangeForm}
+                placeholder="Diagnosis"
                 disabled={type === 'delete'}
               />
             </div>
-            <div className="flex items-center justify-between gap-[30px]">
+            <div className="flex flex-col gap-2">
               <label
-                className="w-fit text-black font-semibold text-xl"
+                className="w-fit text-gray_700 font-medium text-sm"
                 htmlFor="patient-no"
               >
-                환자 번호
+                Patient ID
               </label>
               <Input
                 id="patient-no"
-                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+                inputClassName="w-[320px] h-[56px] py-4 px-5"
                 value={form.patientCode}
                 name="patientCode"
                 onChange={onChangeForm}
+                placeholder="Patient ID"
                 disabled={type === 'delete'}
               />
             </div>
-            <div className="flex items-center justify-between gap-[30px]">
-              <label
-                className="w-fit text-black font-semibold text-xl"
-                htmlFor="patient-age"
-              >
-                연령
+            <div className="flex flex-col gap-2">
+              <label className="w-fit text-gray_700 font-medium text-sm">
+                Birth (Age)
               </label>
-              <Input
-                id="patient-age"
-                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
-                value={form.patientAge}
-                name="patientAge"
-                onChange={onChangeForm}
-                disabled={type === 'delete'}
-              />
+              <div className="flex items-center gap-2">
+                <Input
+                  inputClassName="w-[101px] h-[56px] py-4 px-5"
+                  value={form.patientAge}
+                  name="patientAge"
+                  onChange={onChangeForm}
+                  placeholder="MM"
+                  disabled={type === 'delete'}
+                />
+                <Input
+                  inputClassName="w-[101px] h-[56px] py-4 px-5"
+                  value={form.patientAge}
+                  name="patientAge"
+                  onChange={onChangeForm}
+                  placeholder="DD"
+                  disabled={type === 'delete'}
+                />
+                <Input
+                  inputClassName="w-[101px] h-[56px] py-4 px-5"
+                  value={form.patientAge}
+                  name="patientAge"
+                  onChange={onChangeForm}
+                  placeholder="YYYY"
+                  disabled={type === 'delete'}
+                />
+              </div>
             </div>
-            <div className="flex items-center justify-between gap-[30px]">
+            <div className="flex flex-col gap-2">
               <label
-                className="w-fit text-black font-semibold text-xl"
+                className="w-fit text-gray_700 font-medium text-sm"
                 htmlFor="patient-name"
               >
-                환자 성명
+                Patient Name
               </label>
               <Input
                 id="patient-name"
-                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+                inputClassName="w-[320px] h-[56px] py-4 px-5"
                 value={form.patientName}
                 name="patientName"
                 onChange={onChangeForm}
+                placeholder="Patient Name"
                 disabled={type === 'delete'}
               />
             </div>
-            <div className="flex items-center justify-between gap-[30px]">
+            <div className="flex flex-col gap-2">
               <label
-                className="w-fit text-black font-semibold text-xl"
+                className="w-fit text-gray_700 font-medium text-sm"
                 htmlFor="patient-sex"
               >
-                성별
+                Gender
               </label>
-              <Input
+              {/* <Input
                 id="patient-sex"
-                inputClassName="w-[222px] h-[33px] py-[9px] px-[16px]"
+                inputClassName="w-[320px] h-[56px] py-4 px-5"
                 value={form.patientSex}
                 name="patientSex"
                 onChange={onChangeForm}
+                placeholder="Gender"
                 disabled={type === 'delete'}
-              />
+              /> */}
             </div>
           </div>
-          {type === 'delete' && (
-            <span className="mt-[22px] w-full flex justify-start items-center text-xl font-semibold text-opacity-[0.67]">
-              퇴원하시겠습니까?
-            </span>
-          )}
         </form>
       );
     },
@@ -337,23 +353,23 @@ const HomePageMain = () => {
         </div>
       </Sidebar>
       <div className="w-full flex flex-col">
-        <nav className="w-full p-[28px] flex items-center justify-between border-b-[1px] border-solid border-[#B8B8B8]">
+        <nav className="w-full py-5 px-10 flex items-center justify-between border-b border-solid border-gray_300">
           <Input
             type="search"
-            placeholder="환자명으로 검색"
-            inputClassName="w-[337px] py-[8px] px-[18px]"
+            placeholder="Search by patient name"
+            inputClassName="min-w-[320px] h-10 py-2 px-5"
           />
           <Button
             type="button"
-            text="병상 추가"
+            text="Add bed"
             buttonType="Secondary"
-            size="lg"
-            customClassName="w-[204px] h-[50px]"
+            size="sm"
+            customClassName="min-w-[120px] h-10"
             onClick={() => {}}
           />
         </nav>
-        <main className="w-full flex-1 bg-[#F9F7F7] py-[28px] px-[32px]">
-          <div className="flex flex-wrap gap-[31px]">
+        <main className="w-full flex-1 bg-gray_100 py-10 px-20">
+          <div className="flex flex-wrap gap-8">
             {beds.map((bed) => (
               <DiseaseBed
                 key={bed.id}

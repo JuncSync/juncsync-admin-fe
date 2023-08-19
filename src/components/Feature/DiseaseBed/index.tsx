@@ -44,55 +44,56 @@ const DiseaseBed = ({
   };
 
   return (
-    <section className="w-[338px] h-[200px] bg-white border border-solid border-[#ACACAC] rounded-lg px-[28px] pt-[28px] pb-[19px]">
-      <h2 className="text-black text-[20px] font-bold text-opacity-[0.9] mb-[16px]">
-        병상 {bedCode}
-      </h2>
-      <div className="flex flex-col gap-[6.27px]">
-        <h1 className="text-black text-[20px] font-bold text-opacity-[0.6]">
+    <section className="min-w-[392px] min-h-[190px] bg-white border border-solid border-gray_300 rounded-lg p-6 drop-shadow-card_container">
+      <h2 className="text-gray_700 text-lg font-semibold">Bed {bedCode}</h2>
+      <div className="flex flex-col gap-[10px] mt-[10px]">
+        <h1 className="text-gray_900 text-[20px] font-semibold">
           {isEmpty
-            ? '빈병상'
+            ? 'Vacant Bed'
             : isWaiting
             ? 'Waiting'
-            : `${bed?.patientName}(${bed?.patientAge}세)`}
+            : `${bed?.patientName}(${bed?.patientAge})`}
         </h1>
-        <h4 className="text-black text-[12px] font-bold text-opacity-[0.4]">
-          {isEmpty
-            ? '-'
-            : isWaiting
-            ? '정보 입력이 필요합니다.'
-            : `병명(코드): ${bed?.diseaseName}(${bed?.diseaseCode})`}
-        </h4>
+        <div className="flex items-center gap-2">
+          <img src="/fracture.svg" alt="fracture" />
+          <h4 className="text-gray_700 text-sm font-normal">
+            {isEmpty
+              ? '-'
+              : isWaiting
+              ? 'Please enter patient information.'
+              : `fracture(${bed?.diseaseCode})`}
+          </h4>
+        </div>
       </div>
-      <div className="w-full h-[1px] bg-black opacity-[0.1] mt-[12px] mb-[9px]" />
+      <div className="w-full h-[1px] bg-gray_200 mt-[12px] mb-[8px]" />
       <div className="w-full flex items-center justify-between">
-        <h3 className="text-black text-opacity-[0.67] text-sm font-bold">
-          {isEmpty ? '-' : `in : ${dayjs(createdAt).format('YY.MM.DD')}`}
+        <h3 className="text-black text-opacity-[0.67] text-sm font-semibold">
+          {isEmpty ? '-' : `In : ${dayjs(createdAt).format('YY.MM.DD')}`}
         </h3>
 
         {isEmpty ? (
           <Button
             buttonType="Primary"
-            text="입원"
+            text="Admission"
             size="sm"
-            customClassName="w-[58px] h-[25px]"
+            customClassName="w-[100px] h-[30px]"
             onClick={handleAddBed}
           />
         ) : (
           <div className="flex items-center gap-[8px]">
             <Button
               buttonType="Secondary"
-              text="퇴원"
+              text="Disch"
               size="sm"
-              customClassName="w-[58px] h-[25px]"
+              customClassName="min-w-[78px] h-[30px]"
               onClick={() => handleDeleteBed(bed)}
               onMouseOver={onSetFormHoverOrModify}
             />
             <Button
               buttonType="Primary"
-              text="수정"
+              text="Edit"
               size="sm"
-              customClassName="w-[58px] h-[25px]"
+              customClassName="min-w-[78px] h-[30px]"
               onClick={() => handleModifyBed(bed)}
               onMouseOver={onSetFormHoverOrModify}
             />

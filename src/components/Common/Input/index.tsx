@@ -25,9 +25,10 @@ const Input = forwardRef<HTMLInputElement, Props>(
         onClick={onClick}
       >
         <input
-          className={`font-normal text-lg text-black bg-white border border-solid border-gray_300 rounded-lg placeholder-gray_400 ${classNames(
+          className={`font-normal text-lg text-gray_900 border border-solid border-gray_300 rounded-lg placeholder:text-lg placeholder-gray_400 ${classNames(
             {
-              'cursor-not-allowed': disabled,
+              'cursor-not-allowed bg-gray_100': disabled,
+              'bg-white': !disabled,
             },
           )} ${inputClassName}`}
           type={type}
