@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 
-import { INITIAL_FORM } from '@/pageComponents/HomePageMain';
-
 import Button from '@/components/Common/Button';
+
+import { INITIAL_FORM } from '@/constants/HomePage/form';
 
 import { Bed } from '@/api/models/bed/bed.type';
 
