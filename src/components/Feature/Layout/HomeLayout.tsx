@@ -38,8 +38,8 @@ const HomeLayout = ({ children }: ILayoutProps) => {
                   className="w-4 h-4"
                   src={`${
                     currentRoomId === id
-                      ? '/patient-room.svg'
-                      : '/patient-room--inactive.svg'
+                      ? '/icons/patient-room.svg'
+                      : '/icons/patient-room--inactive.svg'
                   } `}
                   alt="탭"
                 />
@@ -49,7 +49,7 @@ const HomeLayout = ({ children }: ILayoutProps) => {
           ))}
           <div className="py-5 px-8">
             <button className="flex items-center gap-2 text-gray_400 font-semibold text-lg">
-              <img className="w-4 h-4" src="/plus.svg" alt="추가" />
+              <img className="w-4 h-4" src="/icons/plus.svg" alt="추가" />
               Add Patient Room
             </button>
           </div>

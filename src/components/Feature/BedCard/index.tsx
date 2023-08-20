@@ -64,7 +64,7 @@ const BedCard = ({
               })`}
         </h1>
         <div className="flex items-center gap-2">
-          <img src="/fracture.svg" alt="fracture" />
+          <img src="/icons/fracture.svg" alt="fracture" />
           <h4 className="text-gray_700 text-sm font-normal">
             {isEmpty
               ? '-'

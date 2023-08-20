@@ -74,7 +74,7 @@ const LoginPageMain = () => {
       className="flex justify-center items-center w-full min-h-screen"
       style={{
         ...COMMON_BACKGROUND_IMAGE_STYLES,
-        backgroundImage: `url("/login-bg.webp")`,
+        backgroundImage: `url("/images/login-bg.webp")`,
       }}
     >
       <form
@@ -82,7 +82,11 @@ const LoginPageMain = () => {
         onSubmit={onSubmit}
       >
         <div className="w-full flex items-center justify-start py-8">
-          <img className="w-[221px] h-[57px]" src="/logo.svg" alt="로고" />
+          <img
+            className="w-[221px] h-[57px]"
+            src="/images/logo.svg"
+            alt="로고"
+          />
         </div>
         <div className="w-full flex flex-col gap-[15.47px]">
           <Input
