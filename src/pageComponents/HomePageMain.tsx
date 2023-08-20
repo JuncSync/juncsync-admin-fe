@@ -61,7 +61,7 @@ const HomePageMain = () => {
   return (
     <HomeLayout>
       <div className="w-full flex flex-col">
-        <nav className="sticky top-0 w-full py-5 px-10 flex items-center justify-between border-b border-solid border-gray_200 z-50 bg-white">
+        <nav className="fixed top-0 w-[calc(100%-280px)] py-5 px-10 flex items-center justify-between border-b border-solid border-gray_200 z-50 bg-white">
           <Input
             type="search"
             placeholder="Search by patient name"
@@ -78,7 +78,7 @@ const HomePageMain = () => {
             onClick={() => {}}
           />
         </nav>
-        <main className="w-full flex-1 bg-gray_100 py-10 px-20">
+        <main className="w-full flex-1 bg-gray_100 py-[7.5rem] px-20">
           {/* TEMP: for column_3 flex styling */}
           <div className="flex flex-wrap gap-8 justify-center column_3:justify-start">
             {beds.map((bed) => (
