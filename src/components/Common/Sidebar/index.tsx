@@ -12,7 +12,7 @@ const Sidebar = ({ children }: ILayoutProps) => {
 
   return (
     <aside className="flex flex-col items-center min-w-[280px] min-h-screen bg-white border-r border-solid border-gray_200">
-      <div className="fixed min-w-[280px] border-b border-solid border-gray_200 py-5 px-8">
+      <div className="fixed min-w-[280px] h-[80px] border-b border-solid border-gray_200 py-5 px-8">
         <img className="w-[124px] h-[32px]" src="/logo.svg" alt="로고" />
       </div>
       <div className="fixed left-0 top-[5rem] min-w-[280px]">{children}</div>
