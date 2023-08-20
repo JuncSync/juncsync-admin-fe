@@ -74,7 +74,7 @@ const useBedModalChildrenForm = () => {
               <Input
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
                 id="diagnosis"
-                value={form?.diagnosis ?? ''}
+                defaultValue={form?.diagnosis ?? ''}
                 name="diagnosis"
                 onChange={onChangeCommonForm}
                 placeholder="Diagnosis"
@@ -105,7 +105,7 @@ const useBedModalChildrenForm = () => {
               <div className="flex items-center gap-2">
                 <Input
                   inputClassName="w-[101px] h-[56px] py-4 px-5"
-                  value={form?.birthMonth ?? ''}
+                  defaultValue={form?.birthMonth ?? ''}
                   name="birthMonth"
                   onChange={onChangeCommonForm}
                   placeholder="MM"
@@ -115,7 +115,7 @@ const useBedModalChildrenForm = () => {
                 />
                 <Input
                   inputClassName="w-[101px] h-[56px] py-4 px-5"
-                  value={form?.birthDay ?? ''}
+                  defaultValue={form?.birthDay ?? ''}
                   name="birthDay"
                   onChange={onChangeCommonForm}
                   placeholder="DD"
@@ -125,7 +125,7 @@ const useBedModalChildrenForm = () => {
                 />
                 <Input
                   inputClassName="w-[101px] h-[56px] py-4 px-5"
-                  value={form?.birthYear ?? ''}
+                  defaultValue={form?.birthYear ?? ''}
                   name="birthYear"
                   onChange={onChangeCommonForm}
                   placeholder="YYYY"
@@ -145,7 +145,7 @@ const useBedModalChildrenForm = () => {
               <Input
                 id="patient-name"
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
-                value={form?.name ?? ''}
+                defaultValue={form?.name ?? ''}
                 name="name"
                 onChange={onChangeCommonForm}
                 placeholder="Patient Name"
@@ -182,7 +182,7 @@ const useBedModalChildrenForm = () => {
                   <div className="flex items-center gap-2">
                     <Input
                       inputClassName="w-[150px] h-[56px] py-4 px-5"
-                      value={form?.etaHour ?? ''}
+                      defaultValue={form?.etaHour ?? ''}
                       name="etaHour"
                       onChange={onChangeCommonForm}
                       placeholder="00"
@@ -192,7 +192,7 @@ const useBedModalChildrenForm = () => {
                     <span className="text-gray_400 text-lg font-normal">:</span>
                     <Input
                       inputClassName="w-[150px] h-[56px] py-4 px-5"
-                      value={form?.etaMin ?? ''}
+                      defaultValue={form?.etaMin ?? ''}
                       name="etaMin"
                       onChange={onChangeCommonForm}
                       placeholder="00"
