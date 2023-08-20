@@ -50,7 +50,9 @@ const BedCard = ({
 
   return (
     <section className="min-w-[392px] min-h-[190px] bg-white border border-solid border-gray_300 rounded-lg p-6 drop-shadow-card_container">
-      <h2 className="text-gray_700 text-lg font-semibold">{`Bed A-00${bed.id}`}</h2>
+      <h2 className="text-gray_700 text-lg font-semibold">{`Bed A-${
+        bed.id > 9 ? '0' : '00'
+      }${bed.id}`}</h2>
       <div className="flex flex-col gap-[10px] mt-[10px]">
         <h1 className="text-gray_900 text-[20px] font-semibold">
           {isEmpty

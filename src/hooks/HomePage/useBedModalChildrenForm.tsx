@@ -57,7 +57,9 @@ const useBedModalChildrenForm = () => {
               <Input
                 id="bed-code"
                 inputClassName="w-[320px] h-[56px] py-4 px-5"
-                value={`A-00${form.bedCode}`}
+                value={`A-${Number(form.bedCode) > 9 ? '0' : '00'}${
+                  form.bedCode
+                }`}
                 name="bedCode"
                 onChange={onChangeCommonForm}
                 placeholder="Bed number"
