@@ -61,7 +61,7 @@ const HomePageMain = () => {
   return (
     <HomeLayout>
       <div className="w-full flex flex-col">
-        <nav className="sticky top-0 w-full py-5 px-10 flex items-center justify-between border-b border-solid border-gray_300 z-50 bg-white">
+        <nav className="sticky top-0 w-full py-5 px-10 flex items-center justify-between border-b border-solid border-gray_200 z-50 bg-white">
           <Input
             type="search"
             placeholder="Search by patient name"
